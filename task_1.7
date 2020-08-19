@@ -13,15 +13,13 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // Ваш код
+        Scanner scan = new Scanner(System.in);        
         System.out.println("Введите длину бассейна в метрах");
-        Scanner scan1 = new Scanner(System.in);
-        float length = scan1.nextFloat();
+        float length = scan.nextFloat();
         System.out.println("Введите ширину бассейна в метрах");
-        Scanner scan2 = new Scanner(System.in);
-        float width = scan2.nextFloat();
+        float width = scan.nextFloat();
         System.out.println("Введите глубину бассейна в метрах");
-        Scanner scan3 = new Scanner(System.in);
-        float depth = scan3.nextFloat();
+        float depth = scan.nextFloat();
 
         System.out.println(length*width*depth*1000);
     }
