@@ -7,19 +7,15 @@
 •	Метод min должен возвращать минимальное значение из чисел a, b и с.
 */
 
-
 public class Main {
     public static int min(int a, int b, int c) {
         //напишите тут ваш код
-        int min1, min2;
-        if (a<c) min1=a;
-        else min1=c;
+        int min1=a;
+        if (min1>b) min1=b;
+        if (min1>c) min1=c;
 
-        if (b<c) min2=b;
-        else min2=c;
 
-        if (min1<min2) return min1;
-        else return min2;
+        return min1;
 
 
     }
