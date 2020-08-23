@@ -20,3 +20,22 @@ public class Cat {
         System.out.println(cat.name);
     }
 }
+
+//вариант с переменной static
+
+/*public class Cat {
+    static String name = "безымянный кот";
+
+
+    public void setName(String name) {
+        //напишите тут ваш код
+    Cat.name = name;
+    }
+
+    public static void main(String[] args) {
+        Cat cat = new Cat();
+        cat.setName("Жужик");
+        System.out.println(cat.name);
+    }
+}
+ */
