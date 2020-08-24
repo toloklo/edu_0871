@@ -13,8 +13,8 @@ public class Main {
         System.out.print("два");
         //System.out.print(b);
         System.out.print(" плюс ");
-        /*System.out.print(" минус ");
-        System.out.print(a);*/
+        //System.out.print(" минус ");
+        System.out.print(a);
         System.out.print("три");
         System.out.print(" равно ");
         //System.out.print(" будет ");
