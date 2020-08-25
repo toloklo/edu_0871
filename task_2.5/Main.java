@@ -22,3 +22,31 @@ public class Main {
         System.out.println("МамаРамуМыла");
     }
 }
+
+
+/*public class Main {
+    public static void main(String[] args) {
+        //напишите тут ваш код
+        String[] word = new String [] {"Мама", "Мыла", "Раму"};
+
+        for ( int i=0; i<6; i++) {
+            int word1=i/2;
+            System.out.print (word[word1]);
+            int j=0;
+            while (j<=word1) {
+              if (j!=word1) System.out.print (word[j]);
+            j++;
+
+            }
+
+            System.out.println(word [(5-i)/2]);
+
+
+        }
+            }
+
+
+
+    }
+
+
