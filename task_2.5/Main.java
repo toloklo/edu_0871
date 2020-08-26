@@ -12,41 +12,24 @@
 •	Должны быть выведены все возможные комбинации. */
 
 public class Main {
+
     public static void main(String[] args) {
         //напишите тут ваш код
-        System.out.println("МылаРамуМама");
-        System.out.println("РамуМамаМыла");
-        System.out.println("МамаМылаРаму");
-        System.out.println("РамуМылаМама");
-        System.out.println("МылаМамаРаму");
-        System.out.println("МамаРамуМыла");
-    }
-}
 
-
-/*public class Main {
-    public static void main(String[] args) {
-        //напишите тут ваш код
-        String[] word = new String [] {"Мама", "Мыла", "Раму"};
-
-        for ( int i=0; i<6; i++) {
-            int word1=i/2;
-            System.out.print (word[word1]);
-            int j=0;
-            while (j<=word1) {
-              if (j!=word1) System.out.print (word[j]);
-            j++;
-
-            }
-
-            System.out.println(word [(5-i)/2]);
-
-
+        String[] word = new String[]{"Мама", "Мыла", "Раму"};
+        for (int i = 0; i < 6; i++) {
+            System.out.print(word[i/2]);
+            if (i%2==0)
+                for (int j = 0; j < 3; j++) {
+                    if (word[j] != word[i/2])
+                        System.out.print(word[j]);
+                }
+            else
+                for (int j = 2; j > -1; j--) {
+                    if (word[j] != word[i/2])
+                        System.out.print(word[j]);
+                }
+            System.out.println();
         }
-            }
-
-
-
     }
-
-
+    }
