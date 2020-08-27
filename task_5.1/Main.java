@@ -18,13 +18,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Scanner scan = new Scanner(System.in);
         List<String> listCity = new ArrayList<>();
         List<String> listFamily = new ArrayList<>();
 
@@ -48,14 +47,13 @@ public class Main {
         while (true) {
 
             System.out.println("Введите город для поиска");
-            String findCity = scan.nextLine();
+            String findCity = reader.readLine();
+            if (findCity.isEmpty())
+                break;
             System.out.println(listFamily.get(listCity.indexOf(findCity)));
-            break;
+
         }
 
 
     }
 }
-
-
-
