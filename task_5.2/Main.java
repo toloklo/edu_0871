@@ -44,8 +44,9 @@ public class Main {
         }
         Arrays.sort(numArr);
 
-        for (int i = 1; i < numArr.length; i=i+2) {
+        for (int i = 0; i < numArr.length; i++) {
 
+            if (numArr[i]%2==0)
             System.out.println(numArr[i]);
         }
     }
