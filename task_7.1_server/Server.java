@@ -23,18 +23,17 @@ public class Server {
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 System.out.println("Клиент подключился");
-                //::::::::::добавил это
-                out.writeUTF("Введите своё имя");
-                String clientName = in.readUTF();
-                users.add(clientName);
-                broadcastMsg("В чате "+num+" человек(а). Это "+users);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
+                            out.writeUTF("Введите своё имя");
+                            String clientName = in.readUTF();
+                            users.add(clientName);
+                            broadcastMsg("А вот и "+clientName+"! Как всегда, вовремя.");
+
                             while (true){
                                 String str = in.readUTF();
-                                //::::::::::::и здесь чуть исправил
                                 broadcastMsg(clientName+": "+str);
                                 System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
                             }
@@ -44,6 +43,8 @@ public class Server {
                     }
                 });
                 thread.start();
+                if (users.size()==0) broadcastMsg("В чате "+num+" человек(а)");
+                else broadcastMsg("В чате "+num+" человек(а). Это "+users+" и "+(num - users.size())+" ещё не представились.");
                 num++;
             }
         }catch (IOException ex){
