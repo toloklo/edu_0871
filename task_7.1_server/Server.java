@@ -21,7 +21,7 @@ public class Server {
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 System.out.println("Клиент подключился");
                 //::::::::::добавил это
-                broadcastMsg("Введите своё имя");
+                out.writeUTF("Введите своё имя");
                 String clientName = in.readUTF();
                 Thread thread = new Thread(new Runnable() {
                     @Override
