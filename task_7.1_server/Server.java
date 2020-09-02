@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Server {
     static ArrayList<Socket> clients = new ArrayList<>();
     public static void main(String[] args) {
+        int num = 1;
         Socket socket = null;
         try {
             ServerSocket serverSocket = new ServerSocket(8189);
@@ -23,6 +24,7 @@ public class Server {
                 //::::::::::добавил это
                 out.writeUTF("Введите своё имя");
                 String clientName = in.readUTF();
+                broadcastMsg("В чате"+num+"человека");
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -30,7 +32,7 @@ public class Server {
                             while (true){
                                 String str = in.readUTF();
                                 //::::::::::::и здесь чуть исправил
-                                broadcastMsg("Клиент "+clientName+" прислал сообщение: "+str);
+                                broadcastMsg(clientName+": "+str);
                                 System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
                             }
                         }catch (IOException e){
@@ -39,6 +41,7 @@ public class Server {
                     }
                 });
                 thread.start();
+                num++;
             }
         }catch (IOException ex){
             ex.printStackTrace();
