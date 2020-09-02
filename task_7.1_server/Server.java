@@ -11,6 +11,8 @@ public class Server {
     static ArrayList<Socket> clients = new ArrayList<>();
     public static void main(String[] args) {
         int num = 1;
+         ArrayList<String> users = new ArrayList<>();
+
         Socket socket = null;
         try {
             ServerSocket serverSocket = new ServerSocket(8189);
@@ -24,7 +26,8 @@ public class Server {
                 //::::::::::добавил это
                 out.writeUTF("Введите своё имя");
                 String clientName = in.readUTF();
-                broadcastMsg("В чате "+num+" человек(а)");
+                users.add(clientName);
+                broadcastMsg("В чате "+num+" человек(а). Это "+users);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
