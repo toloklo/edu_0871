@@ -24,7 +24,7 @@ public class Server {
                 //::::::::::добавил это
                 out.writeUTF("Введите своё имя");
                 String clientName = in.readUTF();
-                broadcastMsg("В чате"+num+"человека");
+                broadcastMsg("В чате "+num+" человека");
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
