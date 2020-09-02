@@ -31,7 +31,7 @@ public class Server {
                                 String str = in.readUTF();
                                 //::::::::::::и здесь чуть исправил
                                 broadcastMsg("Клиент "+clientName+" прислал сообщение: "+str);
-                                System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
+                                //System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
                             }
                         }catch (IOException e){
                             e.printStackTrace();
