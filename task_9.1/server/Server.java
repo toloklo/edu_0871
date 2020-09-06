@@ -9,16 +9,17 @@ import java.util.ArrayList;
 
 public class Server {
     static ArrayList<Socket> clients = new ArrayList<>();
+    static ArrayList<String> users = new ArrayList<>();
+    static ArrayList<Integer> numAll = new ArrayList<>();
     public static void main(String[] args) {
-        int num = 1;
-         ArrayList<String> users = new ArrayList<>();
+        numAll.add(0);
 
-        Socket socket = null;
         try {
+            
             ServerSocket serverSocket = new ServerSocket(8189);
             System.out.println("Сервер запущен");
             while (true){
-                socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 clients.add(socket);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -26,26 +27,43 @@ public class Server {
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        String clientName = null;
                         try {
                             out.writeUTF("Введите своё имя");
-                            String clientName = in.readUTF();
+                            clientName = in.readUTF();
                             users.add(clientName);
-                            broadcastMsg("А вот и "+clientName+"! Как всегда, вовремя.");
+                            broadcastMsg("А вот и " + clientName + "! Как всегда, вовремя.");
 
-                            while (true){
+                            while (true) {
                                 String str = in.readUTF();
-                                broadcastMsg(clientName+": "+str);
-                                System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
+                                broadcastMsg(clientName + ": " + str);
+                                System.out.println("Клиент " + clientName + " прислал сообщение: " + str);
                             }
-                        }catch (IOException e){
-                            e.printStackTrace();
+                        } catch (IOException e) {
+                            System.out.println("Клиент "+users+" отключился");
+
+                            }finally {
+
+                            try {
+                                numAll.remove(0);
+                                if (clientName==null) broadcastMsg("От нас ушёл кто-то неизвестный.");
+                                        else  broadcastMsg (clientName+" нас покинул.");
+                                clients.remove(socket);
+                                users.remove(clientName);
+                                socket.close();
+
+
+
+                            }catch (IOException exception){
+                            exception.printStackTrace();
                         }
+                    }
                     }
                 });
                 thread.start();
-                if (users.size()==0) broadcastMsg("В чате "+num+" человек(а)");
-                else broadcastMsg("В чате "+num+" человек(а). Это "+users+" и "+(num - users.size())+" ещё не представились.");
-                num++;
+                if (users.size()==0) broadcastMsg("В чате "+numAll.size()+" человек(а)");
+                else broadcastMsg("В чате "+numAll.size()+" человек(а). Это "+users+" и "+(numAll.size() - users.size())+" ещё не представились.");
+                numAll.add(0);
             }
         }catch (IOException ex){
             ex.printStackTrace();
