@@ -12,11 +12,11 @@ public class Server {
     static ArrayList<String> users = new ArrayList<>();
     static ArrayList<Integer> numAll = new ArrayList<>();
     public static void main(String[] args) {
-        numAll.add(0);
+
 
         try {
-            
-            ServerSocket serverSocket = new ServerSocket(8189);
+
+            ServerSocket serverSocket = new ServerSocket(8188);
             System.out.println("Сервер запущен");
             while (true){
                 Socket socket = serverSocket.accept();
@@ -32,22 +32,22 @@ public class Server {
                             out.writeUTF("Введите своё имя");
                             clientName = in.readUTF();
                             users.add(clientName);
-                            broadcastMsg("А вот и " + clientName + "! Как всегда, вовремя.");
+                            broadcastMsg(false,"А вот и "+clientName+"! Как всегда, вовремя.");
 
                             while (true) {
                                 String str = in.readUTF();
-                                broadcastMsg(clientName + ": " + str);
-                                System.out.println("Клиент " + clientName + " прислал сообщение: " + str);
+                                broadcastMsg(true, clientName+": "+str);
+                                System.out.println("Клиент "+clientName+" прислал сообщение: "+str);
                             }
                         } catch (IOException e) {
                             System.out.println("Клиент "+users+" отключился");
 
-                            }finally {
+                        }finally {
 
                             try {
                                 numAll.remove(0);
-                                if (clientName==null) broadcastMsg("От нас ушёл кто-то неизвестный.");
-                                        else  broadcastMsg (clientName+" нас покинул.");
+                                if (clientName==null) broadcastMsg( false,"От нас ушёл кто-то неизвестный.");
+                                else  broadcastMsg (false,clientName+" нас покинул.");
                                 clients.remove(socket);
                                 users.remove(clientName);
                                 socket.close();
@@ -55,26 +55,32 @@ public class Server {
 
 
                             }catch (IOException exception){
-                            exception.printStackTrace();
+                                exception.printStackTrace();
+                            }
                         }
                     }
-                    }
                 });
-                thread.start();
-                if (users.size()==0) broadcastMsg("В чате "+numAll.size()+" человек(а)");
-                else broadcastMsg("В чате "+numAll.size()+" человек(а). Это "+users+" и "+(numAll.size() - users.size())+" ещё не представились.");
                 numAll.add(0);
+                thread.start();
+                if (users.size()==0) broadcastMsg(false,"В чате "+numAll.size()+" человек(а). Пока никто не представился.");
+
             }
         }catch (IOException ex){
             ex.printStackTrace();
         }
     }
 
-    public static void broadcastMsg(String str) throws IOException{
+    public static void broadcastMsg(Boolean setResponseArray, String str) throws IOException{
         DataOutputStream out;
         for (Socket socket : clients){
             out = new DataOutputStream(socket.getOutputStream());
-            out.writeUTF(str);
+            if (setResponseArray== false) out.writeUTF(str);
+            else {
+                if (users.size()== numAll.size() ) out.writeUTF("В чате "+numAll.size()+" человек(а). Это "+users+"##"+str);
+                else out.writeUTF("В чате "+numAll.size()+" человек(а). Это "+users+" и "+(numAll.size() - users.size())+" ещё не представились.##"+str);
+
+
+            }
         }
     }
 }
